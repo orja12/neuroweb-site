@@ -4,50 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serenity Yoga Studio</title>
+    <title>URBAN KICKS - Premium Sneaker Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .hover-lift { transition: all 0.3s ease; }
-        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(122,155,118,0.15); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
     </style>
 </head>
-<body class="m-0 p-0 min-h-screen" style="background: linear-gradient(180deg, #F5F1E8, #E8F0E3);">
+<body class="bg-gray-900 text-white">
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 p-5 md:p-10" style="background: rgba(245,241,232,0.95); border-bottom: 1px solid #D4C5B0;">
+    <nav class="bg-gray-800 px-[5%] py-5 sticky top-0 z-50">
         <div class="flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-spa text-4xl" style="color: #7A9B76;"></i>
-                <span class="text-3xl font-semibold" style="color: #2C3E2B; letter-spacing: 1px;">Serenity Yoga Studio</span>
-            </div>
-            <div class="hidden md:flex gap-8 items-center">
-                <span class="text-base font-medium cursor-pointer hover:opacity-70 transition" style="color: #5A7356;" onclick="navigate('/classes')">Classes</span>
-                <span class="text-base font-medium cursor-pointer hover:opacity-70 transition" style="color: #5A7356;" onclick="navigate('/teachers')">Teachers</span>
-                <span class="text-base font-medium cursor-pointer hover:opacity-70 transition" style="color: #5A7356;" onclick="navigate('/about')">About</span>
-                <button class="px-7 py-3 text-white font-semibold rounded-full cursor-pointer hover:opacity-90 transition" style="background: #7A9B76;" onclick="openBooking()">Book Now</button>
+            <h2 class="text-orange-500 font-black text-[28px]">
+                URBAN<span class="text-white">KICKS</span>
+            </h2>
+            <div class="flex gap-[30px] items-center">
+                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/shop')">SHOP</span>
+                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/drops')">DROPS</span>
+                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/about')">ABOUT</span>
+                <button class="bg-orange-500 text-gray-900 px-6 py-3 rounded font-bold hover:bg-orange-600 transition" onclick="navigate('/cart')">CART</button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <section class="py-16 px-10 max-w-7xl mx-auto">
-        <div class="flex flex-col gap-12">
-            
-            <!-- Hero Section -->
-            <div class="text-center flex flex-col gap-4 mb-10">
-                <h1 class="text-5xl font-light" style="color: #2C3E2B; letter-spacing: 2px;">Find Your Balance</h1>
-                <p class="text-xl font-normal" style="color: #5A7356; line-height: 1.6;">Join us for mindful movement and peaceful meditation</p>
-            </div>
+    <!-- Hero Section -->
+    <div class="relative px-[5%] py-20" style="background: linear-gradient(135deg, #111827 0%, #ea580c 100%);">
+        <div class="max-w-[1200px] mx-auto flex flex-col items-center text-center">
+            <h1 class="text-white text-[72px] font-black mb-5 tracking-tighter">
+                STEP INTO<br><span class="text-orange-500">THE FUTURE</span>
+            </h1>
+            <p class="text-gray-300 text-xl max-w-[600px] mb-8 leading-relaxed">
+                Discover exclusive sneaker drops and limited editions from the world's top brands
+            </p>
+            <button class="bg-orange-500 text-gray-900 px-8 py-4 rounded-lg text-lg font-bold hover:bg-orange-600 transition shadow-xl" onclick="scrollToProducts()">
+                EXPLORE COLLECTION
+            </button>
+        </div>
+    </div>
 
-            <!-- Classes Section -->
-            <div class="flex flex-col gap-6">
-                <h2 class="text-4xl font-normal text-center mb-6" style="color: #2C3E2B;">Weekly Class Schedule</h2>
-                
-                <div id="classesGrid" class="grid gap-6 w-full" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-                    <!-- Classes will be loaded here -->
-                </div>
+    <!-- Features Section -->
+    <div class="bg-gray-800 px-[5%] py-16">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="featuresContainer">
+                <!-- Features will be loaded here -->
             </div>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="bg-gray-900 px-[5%] py-20" id="products">
+        <div class="max-w-[1200px] mx-auto">
+            <h2 class="text-white text-5xl font-black mb-4 text-center">NEW ARRIVALS</h2>
+            <p class="text-gray-400 text-center mb-12 text-lg">Latest drops from premium brands</p>
+            <div class="grid grid-cols-1 md:grid-
