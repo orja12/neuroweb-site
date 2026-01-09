@@ -1,61 +1,70 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URBAN KICKS - Premium Sneaker Store</title>
+    <title>Senior Web Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        .hover\:transform-scale-102:hover {
+            transform: scale(1.02);
+        }
+        .hover\:opacity-8:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div class="flex flex-col bg-white min-h-screen">
+        <div class="p-8 mx-auto w-full max-w-6xl">
+            <div class="flex flex-col gap-6">
+                <!-- Hero Section -->
+                <div class="p-5 text-center">
+                    <h1 class="text-gray-900 text-5xl font-light font-serif">Senior Web Developer</h1>
+                    <p class="text-gray-700 text-lg font-thin mt-2">Crafting elegant digital experiences with modern web technologies</p>
+                </div>
 
-    <!-- Navigation -->
-    <nav class="bg-gray-800 px-[5%] py-5 sticky top-0 z-50">
-        <div class="flex justify-between items-center">
-            <h2 class="text-orange-500 font-black text-[28px]">
-                URBAN<span class="text-white">KICKS</span>
-            </h2>
-            <div class="flex gap-[30px] items-center">
-                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/shop')">SHOP</span>
-                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/drops')">DROPS</span>
-                <span class="text-white font-semibold cursor-pointer hover:text-orange-500 transition" onclick="navigate('/about')">ABOUT</span>
-                <button class="bg-orange-500 text-gray-900 px-6 py-3 rounded font-bold hover:bg-orange-600 transition" onclick="navigate('/cart')">CART</button>
-            </div>
-        </div>
-    </nav>
+                <!-- Projects Section -->
+                <div class="mt-8">
+                    <h2 class="text-gray-900 text-4xl font-semibold font-serif mb-4">Latest Projects</h2>
+                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 row-gap-4">
+                        <!-- Projects will be loaded here -->
+                    </div>
+                </div>
 
-    <!-- Hero Section -->
-    <div class="relative px-[5%] py-20" style="background: linear-gradient(135deg, #111827 0%, #ea580c 100%);">
-        <div class="max-w-[1200px] mx-auto flex flex-col items-center text-center">
-            <h1 class="text-white text-[72px] font-black mb-5 tracking-tighter">
-                STEP INTO<br><span class="text-orange-500">THE FUTURE</span>
-            </h1>
-            <p class="text-gray-300 text-xl max-w-[600px] mb-8 leading-relaxed">
-                Discover exclusive sneaker drops and limited editions from the world's top brands
-            </p>
-            <button class="bg-orange-500 text-gray-900 px-8 py-4 rounded-lg text-lg font-bold hover:bg-orange-600 transition shadow-xl" onclick="scrollToProducts()">
-                EXPLORE COLLECTION
-            </button>
-        </div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="bg-gray-800 px-[5%] py-16">
-        <div class="max-w-[1200px] mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="featuresContainer">
-                <!-- Features will be loaded here -->
+                <!-- Skills Section -->
+                <div class="mt-8">
+                    <h2 class="text-gray-900 text-4xl font-semibold font-serif mb-4">Skills</h2>
+                    <div id="skills-container" class="flex gap-2 flex-wrap">
+                        <!-- Skills will be loaded here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Products Section -->
-    <div class="bg-gray-900 px-[5%] py-20" id="products">
-        <div class="max-w-[1200px] mx-auto">
-            <h2 class="text-white text-5xl font-black mb-4 text-center">NEW ARRIVALS</h2>
-            <p class="text-gray-400 text-center mb-12 text-lg">Latest drops from premium brands</p>
-            <div class="grid grid-cols-1 md:grid-
+    <script>
+        // Initialize Supabase Client
+        const supabaseUrl = 'https://sujvecyclnueaggubbqz.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anZlY3ljbG51ZWFnZ3ViYnF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTUyNjAsImV4cCI6MjA1MTkzMTI2MH0.EH9Fhiyo6ZUHNfxaqwH8WtoVFPgYBgbYxPmP1t18Gac';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Fetch and Display Projects
+        async function loadProjects() {
+            try {
+                const { data: projects, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('display_order', { ascending: true, nullsFirst: false })
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const projectsGrid = document.getElementById('projects-grid');
+                
+                if (projects && projects.length > 0) {
+                    projectsGrid.innerHTML = projects.map(project => `
+                        <div class="bg-white rounded-none border border-gray-200 overflow-hidden hover:transform-scale-102 transition-transform duration-200 cursor-pointer">
+                            <img src="${project
