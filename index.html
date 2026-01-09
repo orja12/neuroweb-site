@@ -1,70 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Senior Web Developer Portfolio</title>
+    <title>Byte & Bite - Where Code Meets Cuisine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        .hover\:transform-scale-102:hover {
-            transform: scale(1.02);
-        }
-        .hover\:opacity-8:hover {
-            opacity: 0.8;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glow-text { text-shadow: 0 0 20px #10b981; }
+        .glow-box { box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3); }
+        .glow-btn { box-shadow: 0 0 30px #10b981; }
+        .bg-blur { backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Main Container -->
-    <div class="flex flex-col bg-white min-h-screen">
-        <div class="p-8 mx-auto w-full max-w-6xl">
-            <div class="flex flex-col gap-6">
-                <!-- Hero Section -->
-                <div class="p-5 text-center">
-                    <h1 class="text-gray-900 text-5xl font-light font-serif">Senior Web Developer</h1>
-                    <p class="text-gray-700 text-lg font-thin mt-2">Crafting elegant digital experiences with modern web technologies</p>
-                </div>
+<body class="bg-black m-0 p-0 min-h-screen">
 
-                <!-- Projects Section -->
-                <div class="mt-8">
-                    <h2 class="text-gray-900 text-4xl font-semibold font-serif mb-4">Latest Projects</h2>
-                    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4 row-gap-4">
-                        <!-- Projects will be loaded here -->
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="h-[60vh] bg-gray-900 p-8 flex items-center justify-center">
+        <div class="flex flex-col gap-3 items-center">
+            <h1 class="text-emerald-500 text-6xl font-bold text-center glow-text">Byte & Bite</h1>
+            <p class="text-gray-300 text-2xl text-center mt-2">Where Code Meets Cuisine</p>
+        </div>
+    </section>
 
-                <!-- Skills Section -->
-                <div class="mt-8">
-                    <h2 class="text-gray-900 text-4xl font-semibold font-serif mb-4">Skills</h2>
-                    <div id="skills-container" class="flex gap-2 flex-wrap">
-                        <!-- Skills will be loaded here -->
-                    </div>
-                </div>
+    <!-- Menu Section -->
+    <section class="p-8 bg-black">
+        <div class="flex flex-col gap-4">
+            <h2 class="text-emerald-500 text-4xl font-bold text-center mb-4">Our Menu</h2>
+            
+            <!-- Menu Grid -->
+            <div id="menuGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
+                <!-- Menu items will be loaded here -->
+            </div>
+
+            <!-- Reserve Button -->
+            <div class="flex justify-center mt-6">
+                <button id="reserveBtn" class="bg-emerald-500 text-black px-8 py-4 text-2xl font-bold rounded glow-btn hover:scale-110 transition-transform cursor-pointer">
+                    Reserve a Table ✨
+                </button>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Initialize Supabase Client
-        const supabaseUrl = 'https://sujvecyclnueaggubbqz.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1anZlY3ljbG51ZWFnZ3ViYnF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYzNTUyNjAsImV4cCI6MjA1MTkzMTI2MH0.EH9Fhiyo6ZUHNfxaqwH8WtoVFPgYBgbYxPmP1t18Gac';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-        // Fetch and Display Projects
-        async function loadProjects() {
-            try {
-                const { data: projects, error } = await supabase
-                    .from('projects')
-                    .select('*')
-                    .order('display_order', { ascending: true, nullsFirst: false })
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                const projectsGrid = document.getElementById('projects-grid');
-                
-                if (projects && projects.length > 0) {
-                    projectsGrid.innerHTML = projects.map(project => `
-                        <div class="bg-white rounded-none border border-gray-200 overflow-hidden hover:transform-scale-102 transition-transform duration-200 cursor-pointer">
-                            <img src="${project
+    <!-- Reservation Modal -->
+    <div id="reservationModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-gray-900 border border-emerald-500 rounded-lg p-8 max-w-md w-full glow-box">
+            <h3 class="text-emerald-500 text-3xl font-bold mb-6 text-center">Reserve Your Table</h3>
+            <form id="reservationForm" class="flex flex-col gap-4">
+                <input type="text" id="customerName" placeholder="Your Name" required class="bg-gray-800 text-white border border-emerald-500 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="email" id="customerEmail" placeholder="Email" required class="bg-gray-800 text-white border border-emerald-500 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="tel" id="customerPhone" placeholder="Phone Number" class="bg-gray-800 text-white border border-emerald-500 rounded px-4 py-3 focus:outline-none focus:ring-2 
